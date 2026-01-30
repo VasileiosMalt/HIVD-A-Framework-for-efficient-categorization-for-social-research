@@ -44,10 +44,6 @@ The framework has been successfully applied to:
 3. **Contextual Sensitivity**: Maintains political and cultural context without sacrificing computational efficiency
 4. **Scalability**: Applicable to large-scale visual datasets across diverse political contexts
 
-## Research Context
-
-### Dissertation Studies
-
 ## Use Cases
 
 This framework is designed for researchers working on:
