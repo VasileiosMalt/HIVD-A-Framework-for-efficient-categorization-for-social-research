@@ -1,0 +1,1 @@
+A framework for efficient image categorisation in social research, addressing High Intra-Class Visual Diversity (HIVD). Developed as part of doctoral research at University of Helsinki, this framework bridges qualitative and AI methods for analysing political imagery and social media visuals.
