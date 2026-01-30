@@ -4,6 +4,10 @@
 [![License](https://img.shields.io/badge/License-Research-green.svg)](LICENSE)
 [![University of Helsinki](https://img.shields.io/badge/University-Helsinki-blue.svg)](https://www.helsinki.fi/)
 
+## Framework In A NutShell
+
+![The Framework's logic](https://raw.githubusercontent.com/VasileiosMalt/HIVD-A-Framework-for-efficient-image-categorization-for-social-research/refs/heads/main/framework2.png)
+
 ## Overview
 
 This repository contains the methodological framework and computational approaches developed in the dissertation **"A Framework for Efficient Image Categorisation in Social Research: Addressing High Intra-Class Visual Diversity"** (University of Helsinki, 2026).
@@ -34,10 +38,6 @@ The framework has been successfully applied to:
 - **European Environmental Activism**: Classification of activist imagery from Finland, France, Germany, and Portugal
 - **Instagram Political Visibility**: Mapping regimes of online political visibility of activists
 - **Cross-cultural Visual Activism**: Understanding how visual political participation varies across contexts
-
-## Framework In A NutShell
-
-![The Framework's logic](https://raw.githubusercontent.com/VasileiosMalt/HIVD-A-Framework-for-efficient-image-categorization-for-social-research/refs/heads/main/framework2.png)
 
 ## Core Principles
 
