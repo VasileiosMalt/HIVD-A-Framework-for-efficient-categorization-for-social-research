@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/badge/License-Research-green.svg)](LICENSE)
 [![University of Helsinki](https://img.shields.io/badge/University-Helsinki-blue.svg)](https://www.helsinki.fi/)
 
-## Framework In A NutShell
+## The Framework In A NutShell
 
 ![The Framework's logic](https://raw.githubusercontent.com/VasileiosMalt/HIVD-A-Framework-for-efficient-image-categorization-for-social-research/refs/heads/main/framework2.png)
 
