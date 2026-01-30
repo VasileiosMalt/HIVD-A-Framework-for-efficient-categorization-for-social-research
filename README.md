@@ -35,7 +35,7 @@ The framework has been successfully applied to:
 
 ## Framework In A NutShell
 
-![The Framework's logic](https://raw.githubusercontent.com/VasileiosMalt/HIVD-A-Framework-for-efficient-image-categorization-for-social-research/refs/heads/main/framework2.png){: width="1192" height="415" }
+![The Framework's logic](https://raw.githubusercontent.com/VasileiosMalt/HIVD-A-Framework-for-efficient-image-categorization-for-social-research/refs/heads/main/framework2.png)
 
 ## Core Principles
 
