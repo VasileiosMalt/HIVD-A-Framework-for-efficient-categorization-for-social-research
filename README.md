@@ -22,7 +22,7 @@ Splitting broad theoretical constructs into visually coherent subgroups, reducin
 Merging ethnographic approaches (where human interpretation is key) with artificial intelligence for improved, scalable analysis of visual data.
 
 ### 4. **Zero-Shot Classification with Strong Embeddings**
-Using reference images to create strong embeddings for classification without requiring extensive pre-labeled training data, boosting both computational efficiency and accuracy.
+Using reference images to create strong embeddings for classification without requiring extensive pre-labelled training data, boosting both computational efficiency and accuracy.
 
 ## Empirical Applications
 
@@ -67,7 +67,7 @@ The complete dissertation is available at the University of Helsinki Digital Rep
 
 ## License
 
-The full text can be read and printed for personal and research use. Commercial use is not allowed without permission.
+The dissertation text can be read and printed for personal and research use. Commercial use is not allowed without permission.
 
 ## Contact
 
