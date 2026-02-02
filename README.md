@@ -84,11 +84,22 @@ This framework is designed for researchers working on:
 
 This section provides step-by-step instructions for using the HIVD Classifier software. No programming experience required.
 
-## 📥 Installation
+## 📥 Installation & Usage
 
 1. **Download** the latest release from the [Releases page](https://github.com/VasileiosMalt/HIVD-A-Framework-for-efficient-image-categorization-for-social-research/releases)
 2. **Extract** the downloaded ZIP file to any location (e.g., your Desktop or Documents folder)
-3. **Done!** No installation wizard needed—the application is self-contained
+3. **Install Python version 3.9.18** and run 
+```
+pip install -r requirements.txt
+
+```
+> ⚠️ This is the python version in which it was tested. A newer one may work, but it is not guaranteed.
+
+4. **Then go to /HIVD_classifier/backend/** and run:
+```
+python .\main.py
+
+```
 
 ---
 
