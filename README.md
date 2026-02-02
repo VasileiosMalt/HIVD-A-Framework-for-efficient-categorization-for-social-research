@@ -336,14 +336,14 @@ server:
 
 ## ❓ Troubleshooting
 
-| Problem | Solution |
+| Problem | Possible Solution |
 |---------|----------|
 | **"First launch is very slow"** | Normal! AI models (~2GB) are downloading. Wait 2-5 minutes. |
 | **"Browser doesn't open automatically"** | Manually go to `http://127.0.0.1:8000` in your browser |
 | **"Port 8000 is already in use"** | Edit `config.yaml` and change `server.port` to 8080 or another number |
 | **"Out of memory error"** | Close other applications, or reduce `augmentations` in settings |
 | **"Classification is very slow"** | Use a smaller CLIP model (RN101), reduce augmentations, or process fewer images |
-| **"Poor accuracy"** | Add more diverse reference images, improve class descriptions, or increase augmentations |
+| **"Poor accuracy"** | Add more diverse reference images, improve class descriptions, or adjust augmentations |
 | **"GPU not being used"** | Ensure you have an NVIDIA GPU with CUDA installed. The app auto-falls back to CPU otherwise. |
 
 ---
