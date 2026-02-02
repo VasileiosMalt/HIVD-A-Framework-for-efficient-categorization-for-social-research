@@ -5,7 +5,7 @@
 [![University of Helsinki](https://img.shields.io/badge/University-Helsinki-blue.svg)](https://www.helsinki.fi/)
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/VasileiosMalt/HIVD-A-Framework-for-efficient-image-categorization-for-social-research/refs/heads/main/hivd_logo.png" width="400">
+  <img src="https://raw.githubusercontent.com/VasileiosMalt/HIVD-A-Framework-for-efficient-image-categorization-for-social-research/refs/heads/main/hivd_logo.png" width="200">
 </p>
 
 ## Overview
