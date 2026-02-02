@@ -4,15 +4,17 @@
 [![License](https://img.shields.io/badge/License-Research-green.svg)](LICENSE)
 [![University of Helsinki](https://img.shields.io/badge/University-Helsinki-blue.svg)](https://www.helsinki.fi/)
 
+[](https://raw.githubusercontent.com/VasileiosMalt/HIVD-A-Framework-for-efficient-image-categorization-for-social-research/refs/heads/main/hivd_logo.png)
+
 ## The Framework In A NutShell
 
 ![The Framework's logic](https://raw.githubusercontent.com/VasileiosMalt/HIVD-A-Framework-for-efficient-image-categorization-for-social-research/refs/heads/main/framework2.png)
 
 ## Overview
 
-This repository contains the methodological framework and computational approaches developed in the dissertation **"A Framework for Efficient Image Categorisation in Social Research: Addressing High Intra-Class Visual Diversity"** (University of Helsinki, 2026).
+This repository is a technical implementation (HIVD Classifier Webapp) of the methodological framework and computational approaches developed for completing the dissertation **"A Framework for Efficient Image Categorisation in Social Research: Addressing High Intra-Class Visual Diversity"** (University of Helsinki, 2026).
 
-**NOTE: IT CONTAINS THE IN-CODE APPLICATION OF THE FRAMEWORK, AND NOT THE TOTALITY OF ITS CONTRIBUTIONS WHICH WERE ALSO THEORETICAL** 
+**NOTE: IT CONTAINS THE IN-CODE APPLICATION OF THE FRAMEWORK (ALONG WITH A USER INTERFACE), AND NOT THE TOTALITY OF ITS CONTRIBUTIONS WHICH WERE ALSO THEORETICAL** 
 
 The framework attempts to address a fundamental challenge in computational social science: **how to accurately classify political imagery when images within the same theoretical category which exhibit substantially high visual diversity between each other and altogether** - a phenomenon identified as **High Intra-Class Visual Diversity (HIVD)**.
 
@@ -79,19 +81,6 @@ This framework is designed for researchers working on:
 # 📖 User Guide: HIVD Classifier Application
 
 This section provides step-by-step instructions for using the HIVD Classifier software. No programming experience required.
-
-## 🖥️ System Requirements
-
-| Requirement | Minimum | Recommended |
-|-------------|---------|-------------|
-| **Operating System** | Windows 10 (64-bit) | Windows 11 (64-bit) |
-| **RAM** | 8 GB | 16 GB or more |
-| **Storage** | 5 GB free space | SSD with 10+ GB |
-| **Graphics Card** | Not required (CPU mode) | NVIDIA GPU with CUDA support |
-
-> 💡 **Tip**: The software automatically detects if you have a compatible GPU. If not, it uses your CPU (slower but works fine for smaller datasets).
-
----
 
 ## 📥 Installation
 
@@ -204,17 +193,6 @@ If you've created subcategories (e.g., "Protest" → "Protest Signs", "Protest C
 
 > 💡 **Not sure?** Leave it on POST—it works well for most research projects.
 
-#### 🧠 **CLIP Model**
-
-The AI "brain" that analyzes your images:
-
-| Model | Speed | Accuracy | Best For |
-|-------|-------|----------|----------|
-| **RN101** (Default) | ⚡ Fast | Good | Most projects, older computers |
-| **ViT-B-16** | ⚡ Fast | Good | Quick experiments |
-| **ViT-L-14** | ⏱️ Medium | Better | When accuracy matters more than speed |
-
-> 💡 **Not sure?** Leave it on RN101—it's reliable and fast.
 
 #### 🔄 **Augmentations per Reference**
 
@@ -222,11 +200,11 @@ How many variations of your example images the AI creates to learn from.
 
 | Value | Effect |
 |-------|--------|
-| **10-20** | Faster, good for visually consistent categories |
-| **50-100** | Slower, better for diverse categories |
-| **100-200** | Slowest, best for highly diverse images (HIVD) |
+| **around 20** | found best for highly diverse images within the class (HIVD) |
+| **more** | Overfitting possible, therefore avoid |
+| **less** | Maybe not as helpful |
 
-> 💡 **Default (20)** works well for most projects. Increase only if results are poor.
+> 💡 **Default (20)** works well for most projects.
 
 #### 📊 **Confidence Thresholds**
 
