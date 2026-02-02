@@ -1,0 +1,87 @@
+# HIVD Classifier Configuration
+# Maltezos, V. (2026). A framework for efficient image categorisation in social research
+
+# Dataset Paths (relative paths work for both development and packaged exe)
+paths:
+  image_dataset: "./image_dataset"
+  inference_dataset: "./inference_dataset"
+  classes_dir: "./classes"
+  predictions_dir: "./predictions"
+
+# CLIP Model Settings
+# Available models (see /api/models endpoint for full list):
+#   - Fast/CPU:    ViT-B-32 + openai
+#   - Balanced:    ViT-L-14 + openai (default, recommended)
+#   - Accurate:    EVA02-L-14 + merged2b_s4b_b131k
+#   - Best:        ViT-SO400M-14-SigLIP-384 + webli (requires good GPU)
+clip:
+  model_name: "ViT-L-14"  # Upgraded default for better accuracy
+  pretrained: "openai"
+  device: "cuda"  # Options: cuda, cpu, mps (auto-fallback to cpu if cuda unavailable)
+
+# YOLO Model Settings (for safety net object detection)
+yolo:
+  model: "yolov8m.pt"  # Will be downloaded automatically on first use
+  verbose: false
+
+# Classification Parameters
+classification:
+  # Number of augmentations per reference image
+  augmentations: 20
+  
+  # Number of random augmentations to use for dimension filtering
+  random_augmentations: 10
+  
+  # Standard deviation threshold for dimension filtering
+  std_threshold: 2
+  
+  # Probability thresholds
+  high_probability_threshold: 0.6
+  low_probability_threshold: 0.4
+  
+  # Batch size for processing
+  batch_size: 32
+
+# Augmentation Settings
+augmentation:
+  smallest_max_size: 300
+  random_crop_size: 224
+  brightness_range: [0.8, 1.2]
+  contrast_range: [0.8, 1.2]
+  saturation_range: [0.8, 1.2]
+  hue_range: [-0.1, 0.1]
+  gaussian_noise_var: [0.0, 50.0]
+  jpeg_quality_range: [50, 100]
+  grayscale_prob: 0.1
+
+# Server Settings
+server:
+  host: "127.0.0.1"
+  port: 8000
+  reload: true
+
+# Safety Net Rules (object detection post-processing)
+safety_net:
+  enabled: true
+  rules:
+    - category_prefix: "1"  # ProtestSelfies
+      main_category: "1ProtestSelfies"
+      person_count_min: 1
+      person_count_max: 6
+      person_size_threshold: 0.25
+    
+    - category_prefix: "2"  # Crowds
+      main_category: "2Crowds"
+      person_count_min: 2
+      check_groupies: true
+      groupies_threshold: [3, 8]
+    
+    - category_prefix: "3"  # Groupies
+      main_category: "3Groupies"
+      person_count_min: 2
+      chair_count_threshold: 2
+      check_meeting: true
+    
+    - category_prefix: "8"  # Meeting_Deliberation
+      main_category: "8Meeting_Deliberation"
+      person_count_min: 4

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HIVD Classifier - Zero-Shot Image Classification</title>
+    <link rel="stylesheet" href="/static/style.css?v=1.2">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">
+                    <img src="/static/hivd_logo.png" alt="HIVD Logo" class="logo-img">
+                    HIVD Classifier
+                </h1>
+                <div class="header-info">
+                    <div class="status-indicator" id="systemStatus">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Initializing...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        <div class="container">
+
+            <!-- Navigation Tabs -->
+            <div class="tabs">
+                <button class="tab-button active" data-tab="classes">
+                    <span class="tab-icon">📋</span>
+                    Class Management
+                </button>
+                <button class="tab-button" data-tab="classify">
+                    <span class="tab-icon">🚀</span>
+                    Classification
+                </button>
+                <button class="tab-button" data-tab="results">
+                    <span class="tab-icon">📊</span>
+                    Results
+                </button>
+                <button class="tab-button" data-tab="jobs">
+                    <span class="tab-icon">⚙️</span>
+                    Manage Jobs
+                </button>
+                <button class="tab-button" data-tab="guide">
+                    <span class="tab-icon">📖</span>
+                    User Guide
+                </button>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="tab-content">
+
+                <!-- Classes Tab -->
+                <div class="tab-pane active" id="classesTab">
+                    <div class="section-header">
+                        <h2>Image Classes</h2>
+                        <button class="btn btn-primary" id="btnNewClass">
+                            <span>+</span> New Class
+                        </button>
+                    </div>
+
+                    <div id="classList" class="class-grid">
+                        <!-- Classes will be loaded here -->
+                    </div>
+
+                    <!-- Class Editor Modal -->
+                    <div id="classModal" class="modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 id="modalTitle">New Class</h3>
+                                <button class="modal-close" id="btnCloseModal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="classForm">
+                                    <input type="hidden" id="classId">
+
+                                    <div class="form-group">
+                                        <label for="className">Class Name *</label>
+                                        <input type="text" id="className" class="form-control" required
+                                            placeholder="e.g., ProtestSelfies">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="classDescription">Description (for zero-shot) *</label>
+                                        <textarea id="classDescription" class="form-control" rows="3" required
+                                            placeholder="Describe the visual characteristics..."></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="parentClass">Parent Class (Optional - for subcategorisation)</label>
+                                        <select id="parentClass" class="form-control">
+                                            <option value="">-- No Parent (Macro Class) --</option>
+                                            <!-- Parent classes will be loaded here -->
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Reference Images (max 5)</label>
+                                        <button type="button" class="btn btn-secondary" id="btnBrowseImages">
+                                            Browse Dataset
+                                        </button>
+                                        <div id="selectedImages" class="selected-images">
+                                            <!-- Selected images will appear here -->
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            id="btnCancelClass">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">Save Class</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image Browser Modal -->
+                    <div id="imageBrowserModal" class="modal">
+                        <div class="modal-content modal-large">
+                            <div class="modal-header">
+                                <h3>Select Reference Images</h3>
+                                <button class="modal-close" id="btnCloseImageBrowser">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="image-browser-info">
+                                    <span id="selectedCount">0 / 5 selected</span>
+                                </div>
+                                <div id="imageBrowser" class="image-grid">
+                                    <!-- Images will be loaded here -->
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary" id="btnConfirmImages">Confirm Selection</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Classification Tab -->
+                <div class="tab-pane" id="classifyTab">
+                    <div class="section-header">
+                        <h2>Run Classification</h2>
+                    </div>
+
+                    <form id="classificationForm" class="classification-form">
+                        <div class="config-grid">
+
+                            <div class="config-section">
+                                <h3>Job Configuration</h3>
+
+                                <div class="form-group">
+                                    <label for="jobName">Job Name *</label>
+                                    <input type="text" id="jobName" class="form-control" required
+                                        placeholder="e.g., protest_images_2024">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Select Classes *</label>
+                                    <div id="classSelector" class="class-selector">
+                                        <!-- Classes will be loaded as checkboxes -->
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Subcategorisation Strategy</label>
+                                    <div class="strategy-toggle-container">
+                                        <div class="strategy-toggle">
+                                            <input type="radio" name="strategyToggle" id="strategyPost" value="post"
+                                                checked>
+                                            <label for="strategyPost" class="strategy-option">
+                                                <span class="strategy-icon">🔀</span>
+                                                <span class="strategy-name">POST</span>
+                                            </label>
+
+                                            <input type="radio" name="strategyToggle" id="strategyPre" value="pre">
+                                            <label for="strategyPre" class="strategy-option">
+                                                <span class="strategy-icon">⚡</span>
+                                                <span class="strategy-name">PRE</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <!-- Hidden select for form submission -->
+                                    <select id="subStrategy" class="form-control" style="display: none;">
+                                        <option value="post">POST</option>
+                                        <option value="pre">PRE</option>
+                                    </select>
+
+                                    <div class="strategy-info-box" id="postInfo">
+                                        <div class="strategy-flow">📷 → <span class="highlight-macro">Macro</span> →
+                                            <span class="highlight-sub">Sub</span> → 📁
+                                        </div>
+                                        <p><strong>Hierarchical:</strong> First classify to macro categories, then
+                                            sub-classify within each. Images move to subcategory <strong>only if ≥
+                                                threshold</strong>.</p>
+                                    </div>
+
+                                    <div class="strategy-info-box" id="preInfo" style="display: none;">
+                                        <div class="strategy-flow">📷 → <span class="highlight-flat">All Compete</span>
+                                            → 📁</div>
+                                        <p><strong>Flat:</strong> All subcategories compete together. Best match wins
+                                            directly. No secondary threshold needed.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="config-section">
+                                <h3>Model Settings</h3>
+
+                                <div class="form-group">
+                                    <label for="clipModel">CLIP Model</label>
+                                    <select id="clipModel" class="form-control">
+                                        <option value="RN101">ResNet-101 (Recommended)</option>
+                                        <option value="ViT-L-14">ViT-L-14 (Large)</option>
+                                        <option value="ViT-B-16">ViT-B-16 (Fast)</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="numAugmentations">Augmentations per Reference</label>
+                                    <input type="number" id="numAugmentations" class="form-control" value="20" min="1"
+                                        max="500">
+                                </div>
+                            </div>
+
+                            <div class="config-section">
+                                <h3>Thresholds</h3>
+
+                                <div class="form-group">
+                                    <label for="highThreshold">
+                                        High Confidence Threshold
+                                        <span id="highThresholdValue">0.60</span>
+                                    </label>
+                                    <input type="range" id="highThreshold" class="slider" min="0" max="1" step="0.05"
+                                        value="0.6">
+                                    <small class="form-hint">Images above this are "high confidence"</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="lowThreshold">
+                                        Low Confidence Threshold
+                                        <span id="lowThresholdValue">0.40</span>
+                                    </label>
+                                    <input type="range" id="lowThreshold" class="slider" min="0" max="1" step="0.05"
+                                        value="0.4">
+                                    <small class="form-hint">Images below this are "low confidence"</small>
+                                </div>
+
+                                <div class="form-group" id="subcategoryThresholdGroup">
+                                    <label for="subcategoryThreshold">
+                                        Subcategory Assignment Threshold
+                                        <span id="subcategoryThresholdValue">0.80</span>
+                                    </label>
+                                    <input type="range" id="subcategoryThreshold" class="slider slider-accent" min="0"
+                                        max="1" step="0.05" value="0.8">
+                                    <small class="form-hint">POST strategy: Minimum confidence to move image from parent
+                                        to subcategory folder (default 80%)</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="applySafetyNet" checked>
+                                        Apply Object Detection Safety Net
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary btn-large">
+                                <span class="btn-icon">🚀</span>
+                                Start Classification
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Progress Display -->
+                    <div id="progressSection" class="progress-section" style="display: none;">
+                        <div class="progress-header">
+                            <h3>🚀 Classification In Progress</h3>
+                            <div class="progress-status" id="progressStatus">
+                                <span class="status-dot pulsing"></span>
+                                <span id="progressMessage">Initializing...</span>
+                            </div>
+                        </div>
+
+                        <div class="progress-visual">
+                            <div class="progress-bar-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="progressFill"></div>
+                                    <div class="progress-glow" id="progressGlow"></div>
+                                </div>
+                                <span class="progress-percentage" id="progressPercentage">0%</span>
+                            </div>
+                        </div>
+
+                        <div class="progress-stats">
+                            <div class="progress-stat">
+                                <span class="stat-icon">📷</span>
+                                <span class="stat-label">Images</span>
+                                <span class="stat-value" id="progressImages">0 / 0</span>
+                            </div>
+                            <div class="progress-stat">
+                                <span class="stat-icon">🔍</span>
+                                <span class="stat-label">Current</span>
+                                <span class="stat-value truncate" id="currentImage">—</span>
+                            </div>
+                            <div class="progress-stat" id="progressStageContainer">
+                                <span class="stat-icon">📊</span>
+                                <span class="stat-label">Stage</span>
+                                <span class="stat-value" id="progressStage">1 of 2</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Tab -->
+                <div class="tab-pane" id="resultsTab">
+                    <div class="section-header">
+                        <h2>Classification Results</h2>
+                    </div>
+
+                    <div id="jobsList" class="jobs-list">
+                        <!-- Jobs will be loaded here -->
+                    </div>
+
+                    <!-- Results Details Modal -->
+                    <div id="resultsModal" class="modal">
+                        <div class="modal-content modal-large">
+                            <div class="modal-header">
+                                <h3 id="resultsTitle">Job Results</h3>
+                                <div class="modal-header-actions">
+                                    <button class="btn btn-secondary btn-small" id="btnOpenFolder"
+                                        title="Open results folder in file explorer">
+                                        <span class="btn-icon">📂</span> Open Folder
+                                    </button>
+                                    <button class="modal-close" id="btnCloseResults">&times;</button>
+                                </div>
+                            </div>
+                            <div class="modal-body">
+                                <div class="results-summary-bar">
+                                    <div class="summary-stat">
+                                        <span class="label">Total Images:</span>
+                                        <span id="resTotal" class="value">0</span>
+                                    </div>
+                                    <div class="summary-stat">
+                                        <span class="label">High Confidence:</span>
+                                        <span id="resHigh" class="value success">0</span>
+                                    </div>
+                                    <div class="summary-stat">
+                                        <span class="label">Low Confidence:</span>
+                                        <span id="resLow" class="value warning">0</span>
+                                    </div>
+                                    <div class="summary-stat" id="subclassStat" style="display: none;">
+                                        <span class="label">Subcategorised:</span>
+                                        <span id="resSub" class="value info">0</span>
+                                    </div>
+                                </div>
+
+                                <div class="results-viewer">
+                                    <div class="results-tabs">
+                                        <button class="res-tab active" data-filter="high">High Confidence</button>
+                                        <button class="res-tab" data-filter="low">Low Confidence (Requires
+                                            Review)</button>
+                                    </div>
+                                    <div id="resultsGrid" class="results-grid">
+                                        <!-- Result items will be loaded here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jobs Management Tab -->
+                <div class="tab-pane" id="jobsTab">
+                    <div class="section-header">
+                        <h2>Manage Jobs</h2>
+                        <div class="header-actions">
+                            <button class="btn btn-secondary btn-small" id="btnDeleteAllJobs"
+                                style="color: var(--error); border-color: rgba(239, 68, 68, 0.3);">
+                                <span class="btn-icon">🗑️</span> Delete All Jobs
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="data-table" id="jobsTable">
+                            <thead>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>Job Name</th>
+                                    <th>Images</th>
+                                    <th>Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="jobsTableBody">
+                                <!-- Jobs will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- User Guide Tab -->
+                <div class="tab-pane" id="guideTab">
+                    <div class="section-header">
+                        <h2>System User Guide</h2>
+                    </div>
+
+                    <div class="guide-container">
+                        <section class="guide-section">
+                            <h3><span class="icon">🎓</span> 1. Methodological Recommendations</h3>
+                            <p>To address High Intra-class Visual Diversity (HIVD), the following sequence of practices
+                                from the research framework is recommended:</p>
+                            <div class="guide-info-box">
+                                <ul class="methodology-list">
+                                    <li><strong>Class Solidification</strong>: Don't assume categories are self-evident.
+                                        Explicitly define the specific <em>visual indicators</em> (e.g., banners, police
+                                        presence, specific gestures) that qualify an image for a category to eliminate
+                                        ambiguity between researchers and the model.</li>
+                                    <li><strong>Category Refinement</strong>: Iteratively test your definitions against
+                                        real data. If a category like "Violence" proves too subjective or inconsistent,
+                                        refine it to a more visually discernible term like "Threat" to ensure stable
+                                        classification.</li>
+                                    <li><strong>Subcategorisation</strong>: Break broad theoretical constructs (like
+                                        "Protest") into visually coherent subgroups (like "Protest Materials", "Group
+                                        Protest Selfies", or "Performative Protest"). This transforms one complex task
+                                        into
+                                        several manageable, visually consistent ones.</li>
+                                </ul>
+                            </div>
+                        </section>
+
+                        <section class="guide-section">
+                            <h3><span class="icon">📂</span> 2. Project Structure & File Placement</h3>
+                            <p>Before starting, ensure your data is placed in the correct directories as defined in
+                                <code>config.yaml</code>:
+                            </p>
+                            <div class="guide-info-box">
+                                <ul>
+                                    <li><strong>Image Dataset (<code>../image_dataset</code>)</strong>: Place images
+                                        here that you want to use as <em>reference images</em> for your classes.</li>
+                                    <li><strong>Inference Dataset (<code>../inference_dataset</code>)</strong>: This is
+                                        your main research collection. Place all images you want to <em>classify</em>
+                                        here.</li>
+                                    <li><strong>Classes Directory (<code>./classes</code>)</strong>: System-managed.
+                                        Stores your class definitions and selected reference images.</li>
+                                    <li><strong>Predictions Directory (<code>./predictions</code>)</strong>:
+                                        Classification results will be saved here, organized by job name and confidence
+                                        levels.</li>
+                                </ul>
+                            </div>
+                        </section>
+
+                        <section class="guide-section">
+                            <h3><span class="icon">🏷️</span> 3. Class Management</h3>
+                            <p>Effective classification depends on how you define your target categories:</p>
+                            <div class="parameter-card">
+                                <strong>Class Description (Zero-Shot)</strong>: Provide a detailed visual description of
+                                the class. The AI uses this text to understand what to look for when no images are
+                                provided or to supplement reference images.
+                            </div>
+                            <div class="parameter-card">
+                                <strong>Reference Images</strong>: Select up to 5 representative images per class. The
+                                system creates "Strong Embeddings" by augmenting these images 100+ times to capture
+                                visual diversity.
+                            </div>
+                            <p class="tip"><strong>Tip:</strong> If you don't have reference images, you can still
+                                create a class with just a description (pure zero-shot mode)!</p>
+                        </section>
+
+                        <section class="guide-section">
+                            <h3><span class="icon">⚙️</span> 4. Classification Parameters</h3>
+                            <div class="params-grid">
+                                <div class="param-item">
+                                    <h4>CLIP Model</h4>
+                                    <p>The "brain" of the classifier. <strong>RN101</strong> is balanced and stable.
+                                        <strong>ViT-L-14</strong> is more powerful but slower and requires more memory.
+                                    </p>
+                                </div>
+                                <div class="param-item">
+                                    <h4>Augmentations</h4>
+                                    <p>Determines how many "variations" of your reference images are created. More
+                                        augmentations (e.g., 100-200) improve accuracy for diverse images (HIVD) but
+                                        take longer to process.</p>
+                                </div>
+                                <div class="param-item">
+                                    <h4>Confidence Thresholds</h4>
+                                    <p><strong>High Threshold (0.60):</strong> Images above this score are sorted into
+                                        the High Probability folder. They are considered "safe" for direct analysis.</p>
+                                    <p><strong>Low Threshold (0.40):</strong> Images between 0.40 and 0.60 are marked as
+                                        Low Confidence. These are "Suspected" matches that require manual verification.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="guide-section">
+                            <h3><span class="icon">🛡️</span> 5. Object Detection Safety Net</h3>
+                            <p>This is a secondary verification step using <strong>YOLOv8</strong>. It checks if the
+                                classified images contain the objects they <em>should</em> contain according to the
+                                <code>config.yaml</code> rules.
+                            </p>
+                            <div class="guide-info-box">
+                                <p>Example: If an image is classified as <strong>"ProtestSelfie"</strong> but the Safety
+                                    Net detects <strong>zero persons</strong>, it will move that image to a
+                                    <code>SuspectedFalsePositives</code> subfolder for you to check.
+                                </p>
+                            </div>
+                        </section>
+
+                        <section class="guide-section">
+                            <h3><span class="icon">📈</span> 6. Reviewing Results</h3>
+                            <p>After a run, go to the <strong>Results</strong> tab:</p>
+                            <ul>
+                                <li>Use <strong>View Details</strong> to see the per-class breakdown.</li>
+                                <li>Click on class labels (e.g., "burqa") to filter the grid.</li>
+                                <li>Click on any thumbnail to see the <strong>full-size image</strong> and its
+                                    prediction confidence.</li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Image Preview Modal (Lightbox) -->
+    <div id="imagePreviewModal" class="modal">
+        <div class="modal-content modal-preview">
+            <button class="modal-close preview-close" id="btnClosePreview">&times;</button>
+            <div class="preview-container">
+                <img id="previewImage" src="" alt="Full size preview">
+                <div class="preview-info">
+                    <h3 id="previewTitle">Image Name</h3>
+                    <p id="previewMeta">Class: Prediction | Confidence: 99%</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="citation">
+                Maltezos, V. (2026). A framework for efficient image categorisation in social research:
+                Addressing high intra-class visual diversity. <em>Dissertationes Universitatis Helsingiensis</em>
+                (27/2026).
+                Helsingin yliopisto. <a href="http://urn.fi/URN:ISBN:978-952-84-1827-6"
+                    target="_blank">http://urn.fi/URN:ISBN:978-952-84-1827-6</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="/static/app.js?v=1.2"></script>
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+# ============================================
+# HIVD Classifier - Git Ignore Configuration
+# ============================================
+
+# ----- Visual Studio / IDE -----
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.rsuser
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# ----- Database files (contain user classification history) -----
+*.db
+*.sqlite
+*.sqlite3
+
+# ----- User data directories (may contain personal images) -----
+# Distributed version (HIVD_Classifier)
+HIVD_Classifier/image_dataset/*
+HIVD_Classifier/inference_dataset/*
+HIVD_Classifier/predictions/*
+HIVD_Classifier/classes/*
+
+# Development version (HIVD_classifier)
+HIVD_classifier/image_dataset/*
+HIVD_classifier/inference_dataset/*
+HIVD_classifier/predictions/*
+HIVD_classifier/classes/*
+
+# Keep the directories but ignore contents
+!HIVD_Classifier/image_dataset/.gitkeep
+!HIVD_Classifier/inference_dataset/.gitkeep
+!HIVD_Classifier/predictions/.gitkeep
+!HIVD_Classifier/classes/.gitkeep
+!HIVD_classifier/image_dataset/.gitkeep
+!HIVD_classifier/inference_dataset/.gitkeep
+!HIVD_classifier/predictions/.gitkeep
+!HIVD_classifier/classes/.gitkeep
+
+# ----- Environment and secrets -----
+.env
+.env.*
+*.key
+*.pem
+secrets.*
+credentials.*
+
+# ----- Logs -----
+*.log
+logs/
+
+# ----- Python -----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# ----- PyInstaller -----
+*.manifest
+*.spec
+
+# ----- Jupyter Notebook -----
+.ipynb_checkpoints
+
+# ----- pytest -----
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ----- mypy -----
+.mypy_cache/
+
+# ----- OS generated files -----
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ----- Large model files (optional - uncomment if you don't want to include) -----
+# These are auto-downloaded on first run, so excluding saves repo space
+# *.pt
+# *.pth
+# *.onnx
+
+# ----- Temporary files -----
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
