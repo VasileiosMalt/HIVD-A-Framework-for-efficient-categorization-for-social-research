@@ -4,7 +4,9 @@
 [![License](https://img.shields.io/badge/License-Research-green.svg)](LICENSE)
 [![University of Helsinki](https://img.shields.io/badge/University-Helsinki-blue.svg)](https://www.helsinki.fi/)
 
-[![Logo](https://raw.githubusercontent.com/VasileiosMalt/HIVD-A-Framework-for-efficient-image-categorization-for-social-research/refs/heads/main/hivd_logo.png)]
+<p align="center">
+  <img src="[path/to/image.png](https://raw.githubusercontent.com/VasileiosMalt/HIVD-A-Framework-for-efficient-image-categorization-for-social-research/refs/heads/main/hivd_logo.png)" width="400">
+</p>
 
 ## The Framework In A NutShell
 
