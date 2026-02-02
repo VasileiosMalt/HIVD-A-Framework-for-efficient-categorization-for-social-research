@@ -91,14 +91,12 @@ This section provides step-by-step instructions for using the HIVD Classifier so
 3. **Install Python version 3.9.18** and run 
 ```
 pip install -r requirements.txt
-
 ```
 > ⚠️ This is the python version in which it was tested. A newer one may work, but it is not guaranteed.
 
 4. **Then go to /HIVD_classifier/backend/** and run:
 ```
 python .\main.py
-
 ```
 
 ---
@@ -120,9 +118,10 @@ HIVD_Classifier/
 
 ### Step 2: Launch the Application
 
-1. Double-click **`HIVD_Classifier.exe`**
-2. A console window opens (keep it open!)
-3. Your web browser automatically opens to `http://127.0.0.1:8000`
+**Go to /HIVD_classifier/backend/** and run:
+```
+python .\main.py
+```
 
 > ⏳ **First launch takes 2-5 minutes** as AI models are downloaded (~2GB). Subsequent launches are much faster.
 
@@ -241,7 +240,7 @@ These control how the software sorts results:
 
 #### 🛡️ **Safety Net (Object Detection)**
 
-An optional second check using object detection. Example: If an image is classified as "Group Selfie" but no people are detected, it's flagged for review.
+An optional second check using object detection. Example: If an image is classified as "Group Selfie" but no people are detected, it's flagged for review. ATTENTION: YOU NEED TO ADJUST THE SPECIFIC PARAMS AND SET THIS UP. REQUIRES TECHNICAL KNOWLEDGE.
 
 > 💡 **Recommended**: Keep this ON for better accuracy.
 
@@ -315,13 +314,13 @@ For power users, the `config.yaml` file allows fine-tuning:
 ```yaml
 # Change the AI model (see Technical Approach section for options)
 clip:
-  model_name: "ViT-L-14"    # More accurate but slower
+  model_name: "ViT-L-14"
   pretrained: "openai"
   device: "cuda"             # Use "cpu" if you don't have an NVIDIA GPU
 
 # Adjust classification behavior
 classification:
-  augmentations: 50                    # Increase for better accuracy
+  augmentations: 20                    
   high_probability_threshold: 0.7      # Stricter high confidence
   low_probability_threshold: 0.3       # More permissive low confidence
 
