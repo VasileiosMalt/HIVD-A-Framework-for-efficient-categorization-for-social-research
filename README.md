@@ -8,10 +8,6 @@
   <img src="https://raw.githubusercontent.com/VasileiosMalt/HIVD-A-Framework-for-efficient-image-categorization-for-social-research/refs/heads/main/hivd_logo.png" width="400">
 </p>
 
-## The Framework In A NutShell
-
-![The Framework's logic](https://raw.githubusercontent.com/VasileiosMalt/HIVD-A-Framework-for-efficient-image-categorization-for-social-research/refs/heads/main/framework2.png)
-
 ## Overview
 
 This repository is a technical implementation (HIVD Classifier Webapp) of the methodological framework and computational approaches developed for completing the dissertation **"A Framework for Efficient Image Categorisation in Social Research: Addressing High Intra-Class Visual Diversity"** (University of Helsinki, 2026).
@@ -23,6 +19,10 @@ The framework attempts to address a fundamental challenge in computational socia
 ## The Challenge: High Intra-Class Visual Diversity
 
 In political and social research, images that belong to the same conceptual category (e.g., "environmental activism", "protest imagery", "political memes") often display significant visual differences.
+
+## The Framework In A NutShell
+
+![The Framework's logic](https://raw.githubusercontent.com/VasileiosMalt/HIVD-A-Framework-for-efficient-image-categorization-for-social-research/refs/heads/main/framework2.png)
 
 ## Key Contributions
 
